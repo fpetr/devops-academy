@@ -1,2 +1,0 @@
-## Cowsay
-cowsay ahoj
