@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+   db:
+     image: postgres:11.4
+     volumes:
+       - db_data:/var/lib/postgresql
+     environment:
+       POSTGRES_PASSWORD: secret
+       POSTGRES_DB: drupal
+       POSTGRES_USER: dp_user
+     networks:
+       - dp_network
+
+   drupal:
+     depends_on:
+       - db
+     image: drupal
+     ports:
+       - "80:80"
+     volumes:
+       - /var/www/html/modules
+       - /var/www/html/profiles
+       - /var/www/html/themes
+       - /var/www/html/sites
+     networks:
+       - dp_network
+
+   adminer:
+     depends_on:
+       - db
+     image: adminer
+     ports:
+       - "8080:8080"
+     networks:
+       - dp_network
+
+   swissarmyknife:
+     image: bletvaska/swissarmyknife
+     networks:
+       - dp_network 
+     
+
+volumes:
+    db_data: {}
+networks:
+    dp_network:
