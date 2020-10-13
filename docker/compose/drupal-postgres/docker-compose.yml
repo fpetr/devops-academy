@@ -4,7 +4,7 @@ services:
    db:
      image: postgres:11.4
      volumes:
-       - db_data:/var/lib/postgresql
+       - db_data:/var/lib/postgresql/data
      environment:
        POSTGRES_PASSWORD: secret
        POSTGRES_DB: drupal
