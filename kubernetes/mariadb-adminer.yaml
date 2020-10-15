@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     run: db
   name: db
@@ -10,10 +9,8 @@ spec:
   selector:
     matchLabels:
       run: db
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         run: db
     spec:
@@ -25,13 +22,10 @@ spec:
         name: db
         ports:
         - containerPort: 3306
-        resources: {}
-status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     run: db
   name: db
@@ -42,13 +36,10 @@ spec:
     targetPort: 3306
   selector:
     run: db
-status:
-  loadBalancer: {}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     run: adminer
   name: adminer
@@ -57,10 +48,8 @@ spec:
   selector:
     matchLabels:
       run: adminer
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         run: adminer
     spec:
@@ -69,13 +58,10 @@ spec:
         name: adminer
         ports:
         - containerPort: 8080
-        resources: {}
 ---
 apiVersion: v1
-status: {}
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     run: adminer
   name: adminer
@@ -86,13 +72,10 @@ spec:
     targetPort: 8080
   selector:
     run: adminer
-status:
-  loadBalancer: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     run: adminer
   name: adminer-lb
@@ -104,5 +87,3 @@ spec:
   selector:
     run: adminer
   type: LoadBalancer
-status:
-  loadBalancer: {}
