@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: db
+  name: db
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: db
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: db
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: secret
+        image: mariadb
+        name: db
+        ports:
+        - containerPort: 3306
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: db
+  name: db
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+    targetPort: 3306
+  selector:
+    run: db
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: adminer
+  name: adminer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: adminer
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: adminer
+    spec:
+      containers:
+      - image: adminer
+        name: adminer
+        ports:
+        - containerPort: 8080
+        resources: {}
+---
+apiVersion: v1
+status: {}
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: adminer
+  name: adminer
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: adminer
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: adminer
+  name: adminer-lb
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: adminer
+  type: LoadBalancer
+status:
+  loadBalancer: {}
