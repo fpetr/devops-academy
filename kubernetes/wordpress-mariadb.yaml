@@ -3,6 +3,9 @@ kind: Deployment
 metadata:
   labels:
     run: wp-db
+    tier: backend
+    env: prod
+    customer: tuke
   name: wp-db
 spec:
   replicas: 1
@@ -13,9 +16,6 @@ spec:
     metadata:
       labels:
         run: wp-db
-        tier: backend
-        env: prod
-        customer: tuke
     spec:
       containers:
       - env:
@@ -51,6 +51,9 @@ kind: Deployment
 metadata:
   labels:
     run: wp-app
+    tier: frontend
+    env: prod
+    customer: tuke
   name: wp-app
 spec:
   replicas: 4 
@@ -61,9 +64,6 @@ spec:
     metadata:
       labels:
         run: wp-app
-        tier: frontend
-        env: prod
-        customer: tuke
     spec:
       containers:
       - env:
